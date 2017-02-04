@@ -1,9 +1,9 @@
 # Seezov
 Arkanoid 2017
 
-Theme / Setting / Genre - Arcade 
-Core Gameplay Mechanics Brief - Story Mode, Time-attack, Endless Game Mode
-Targeted platforms - Windows, Android
+* Theme / Setting / Genre - Arcade 
+* Core Gameplay Mechanics Brief - Story Mode, Time-attack, Endless Game Mode
+* Targeted platforms - Windows, Android
 
 Monetization model (Brief/Document)
 * Freeware
