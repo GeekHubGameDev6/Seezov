@@ -12,6 +12,7 @@ Core Gameplay Mechanics
 
 Additional features
 * After block is destroyed it can drop power-ups for paddle to catch. Power-ups will upgrade the paddle itself or the ball in various ways.
+* Game can generate new levels automatically
 * Player can save his score
 * Paddle can be controlled via gyroscope
 
