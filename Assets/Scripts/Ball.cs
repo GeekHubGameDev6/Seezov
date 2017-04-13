@@ -38,11 +38,14 @@ public class Ball : MonoBehaviour
 
     public void LaunchBall()
     {
-        BallRigbody.bodyType = RigidbodyType2D.Dynamic;
-        BallRigbody.AddForce(new Vector2(BallForce * Input.GetAxis("Horizontal"), BallForce));
-        _isAttached = false;
-        if (!SecondPaddle.IsMultiplayer)
-            GameManagerEndless.StartTimer = true;
+        if (_isAttached)
+        {
+            BallRigbody.bodyType = RigidbodyType2D.Dynamic;
+            BallRigbody.AddForce(new Vector2(BallForce * Input.GetAxis("Horizontal"), BallForce));
+            _isAttached = false;
+            if (!SecondPaddle.IsMultiplayer)
+                GameManagerEndless.StartTimer = true;
+        }
     }
 
     public void Die()
