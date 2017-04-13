@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
+    public GameObject[] PowerUpPrefabs;
 
     public int BrickValue = 10;
     public int HitPoints = 1;
@@ -31,6 +32,11 @@ public class Brick : MonoBehaviour
         AddPoints(BrickValue);
         GameManager.NumberOfBricks--;
         GameManagerEndless.NumberOfBricks--;
+        if (!SecondPaddle.IsMultiplayer)
+        {
+            if (Random.value <= 0.60)
+                Instantiate(PowerUpPrefabs[Random.Range(0, 4)], transform.position, Quaternion.identity);
+        }
     }
     public void AddPoints(int point)
     {

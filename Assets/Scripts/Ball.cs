@@ -14,8 +14,14 @@ public class Ball : MonoBehaviour
         _paddle = GameObject.Find("paddleRed");
     }
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if(!Audio.IsMuted)
+            GetComponent<AudioSource>().Play();
+    }
+
     // Update is called once per frame
-	void Update () {
+    void Update () {
         // Fire the ball
         if (_isAttached)
 	    {

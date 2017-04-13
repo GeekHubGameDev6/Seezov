@@ -78,6 +78,8 @@ public class Paddle : MonoBehaviour{
     // Realistic collisions
     void OnCollisionEnter2D(Collision2D coll)
     {
+        if(coll.gameObject.layer == 8 && !Audio.IsMuted)
+            GetComponent<AudioSource>().Play();
         foreach (ContactPoint2D contact in coll.contacts)
         {  
             if (contact.otherCollider == GetComponent<CapsuleCollider2D>())

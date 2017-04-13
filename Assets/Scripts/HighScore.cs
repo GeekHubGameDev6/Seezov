@@ -14,8 +14,4 @@ public class HighScore : MonoBehaviour {
         HighScoreText.text = "High Score " + PlayerPrefs.GetInt("HighScore").ToString();
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
