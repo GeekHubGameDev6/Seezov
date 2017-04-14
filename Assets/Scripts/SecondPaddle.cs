@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class SecondPaddle : MonoBehaviour
 {
-
     public static bool IsMultiplayer = true;
-
     public Rigidbody2D Rigbody;
     public float Speed;
     public GameObject ControlButtonOne;
@@ -30,7 +28,6 @@ public class SecondPaddle : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Z) || Input.GetKeyUp(KeyCode.X))
             Stop();
 #endif
-
         // Restricting paddle
         if (transform.position.x > 2.1f)
             transform.position = new Vector3(2.1f, transform.position.y, transform.position.z);
@@ -38,8 +35,6 @@ public class SecondPaddle : MonoBehaviour
             transform.position = new Vector3(-2.1f, transform.position.y, transform.position.z);
 
     }
-
-
 
     public void MoveLeft()
     {

@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public class GameManagerMultiplayer : MonoBehaviour {
 
+    private GameObject _ball;
+
     public GameObject VictoryPanel;
     public Text WinnerText;
     public static int P1Lives;
     public Text P1LivesText;
     public static int P2Lives;
     public Text P2LivesText;
-    private GameObject _ball;
+   
 
     // Use this for initialization
     void Start ()
@@ -29,11 +31,10 @@ public class GameManagerMultiplayer : MonoBehaviour {
         P2LivesText.text = "Lives " + P2Lives;
     }
 
-    public void LB()
+    public void LaunchBall()
     {
         _ball = GameObject.Find("ballBlue(Clone)");
-        Ball Ballscript = _ball.GetComponent<Ball>();
-        Ballscript.LaunchBall();
+        _ball.GetComponent<Ball>().LaunchBall();
     }
 
     public void Restart()
@@ -47,7 +48,6 @@ public class GameManagerMultiplayer : MonoBehaviour {
     {
         Time.timeScale = 0f;
     }
-
 
     public void Resume()
     {
@@ -70,5 +70,4 @@ public class GameManagerMultiplayer : MonoBehaviour {
             Time.timeScale = 0f;
         }
     }
-
 }

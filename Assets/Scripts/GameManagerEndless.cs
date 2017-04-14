@@ -6,16 +6,16 @@ using UnityEngine.UI;
 public class GameManagerEndless : MonoBehaviour {
 
     public GameObject[] KubePrefabs;
-    public GameObject EndgamePanel;
-
-    public static int NumberOfBricks;
     private GameObject _ball;
+    public static int NumberOfBricks;
     public static bool Launch = false;
-    public static bool StartTimer = false;
+    public static bool StartTimer;
+    public float Countdown;
+
     public Text TimeForLevelText;
     public static int Score;
     public Text ScoreText;
-    public float Countdown;
+    public GameObject EndgamePanel;
 
     private bool[][] _pattern = new bool[7][];
     Vector3 _upperRightKube = new Vector3(-2.1f, 3.2f, 0f);
@@ -28,14 +28,12 @@ public class GameManagerEndless : MonoBehaviour {
         NumberOfBricks = 0;
         Resume();
         LoadRandomLevel();
-        
     }
 
-    public void LB()
+    public void LaunchBall()
     {
         _ball = GameObject.Find("ballBlue(Clone)");
-        Ball Ballscript = _ball.GetComponent<Ball>();
-        Ballscript.LaunchBall();
+        _ball.GetComponent<Ball>().LaunchBall();
     }
 
 
@@ -44,17 +42,18 @@ public class GameManagerEndless : MonoBehaviour {
         Time.timeScale = 0f;
     }
 
-    // Update is called once per frame
 	void Update ()
 	{
 	    if (StartTimer)
 	    {
 	        Countdown -= Time.deltaTime;
 	    }
-	    Countdown = Mathf.Clamp(Countdown, 0f, Mathf.Infinity);
+        // Restricting timer from 0 to +inf, excluding negative numbers
+        Countdown = Mathf.Clamp(Countdown, 0f, Mathf.Infinity);
         // GUI Update
 	    TimeForLevelText.text = string.Format("{0:00.00}",Countdown);
         ScoreText.text = "Score " + Score;
+        // High Score Update
         if(Score > PlayerPrefs.GetInt("HighScore"))
             PlayerPrefs.SetInt("HighScore", Score);
     }
@@ -63,7 +62,6 @@ public class GameManagerEndless : MonoBehaviour {
     {
         Time.timeScale = 1f;
     }
-
 
     void LateUpdate()
     {
@@ -84,7 +82,6 @@ public class GameManagerEndless : MonoBehaviour {
     public void LoadRandomLevel()
     {
         // Selecting block pattern
-        Debug.Log("LevelLoaded");
         Countdown = 240f;
         SelectRandomPattern();
         InitializeBlockPattern();
@@ -114,7 +111,7 @@ public class GameManagerEndless : MonoBehaviour {
             {
                 if (_pattern[i][j])
                 {
-                    Vector3 kubePosition = new Vector3(_upperRightKube.x + (_spaceBetweenCubes.x * i), _upperRightKube.y - (_spaceBetweenCubes.y * j), 0);
+                    Vector3 kubePosition = new Vector3(_upperRightKube.x + _spaceBetweenCubes.x * i, _upperRightKube.y - _spaceBetweenCubes.y * j, 0);
                     Instantiate(KubePrefabs[Random.Range(0, 5)], kubePosition, Quaternion.identity);
                 }
             }

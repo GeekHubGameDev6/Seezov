@@ -7,11 +7,9 @@ public class HighScore : MonoBehaviour {
 
     public Text HighScoreText;
 
-
-    // Use this for initialization
     void Start ()
     {
-        HighScoreText.text = "High Score " + PlayerPrefs.GetInt("HighScore").ToString();
+        HighScoreText.text = "High Score " + PlayerPrefs.GetInt("HighScore");
     }
 	
 }

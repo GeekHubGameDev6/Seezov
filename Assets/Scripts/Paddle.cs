@@ -12,29 +12,30 @@ public class Paddle : MonoBehaviour{
     public GameObject ControlButtonTwo;
     public GameObject LaunchButton;
 
-    // Use this for initialization
     void Start ()
     {
-        
         // Spawn new ball
         SpawnBall();
     }
 
-
-
-    // Update is called once per frame
     void Update ()
 	{
 #if UNITY_ANDROID
+        // Android control buttons & accelerometer
         if (Time.timeScale > 0)
         {
             ControlButtonOne.SetActive(true);
             ControlButtonTwo.SetActive(true);
             LaunchButton.SetActive(true);
         }
+        if (Time.timeScale > 0 && !SecondPaddle.IsMultiplayer)
+	    {
+	        // Accelerometer control
+	        transform.Translate(Input.acceleration.x/4, 0f, 0f);
+	    }
 #endif
 #if UNITY_STANDALONE_WIN
-        // Moving paddle
+        // Moving paddle with left and right arrows
         if (Input.GetAxis("Horizontal") < 0)
             MoveLeft();
         if (Input.GetAxis("Horizontal") > 0)
@@ -42,14 +43,6 @@ public class Paddle : MonoBehaviour{
         if (Input.GetAxis("Horizontal") == 0)
             Stop();
 #endif
-#if UNITY_ANDROID
-        if (Time.timeScale > 0 && !SecondPaddle.IsMultiplayer)
-	    {
-	        // Accelerometer control
-	        transform.Translate(Input.acceleration.x/4, 0f, 0f);
-	    }
-#endif
-
         // Restricting paddle
         if (transform.position.x > 2.1f)
             transform.position = new Vector3(2.1f, transform.position.y, transform.position.z);
@@ -57,8 +50,6 @@ public class Paddle : MonoBehaviour{
             transform.position = new Vector3(-2.1f, transform.position.y, transform.position.z);   
 
 	}
-
-    
 
     public void MoveLeft()
     {
@@ -78,7 +69,8 @@ public class Paddle : MonoBehaviour{
     // Realistic collisions
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if(coll.gameObject.layer == 8 && !Audio.IsMuted)
+        //  If we collided with Power-Up
+        if(coll.gameObject.layer == 8)
             GetComponent<AudioSource>().Play();
         foreach (ContactPoint2D contact in coll.contacts)
         {  
@@ -93,6 +85,5 @@ public class Paddle : MonoBehaviour{
     public void SpawnBall()
     {
         Instantiate( BallPrefab ,transform.position + new Vector3(0f, 0.27f, 0f),Quaternion.identity);
-        Debug.Log("Spawn");
     }
 }

@@ -7,22 +7,16 @@ public class PowerUp : MonoBehaviour
 {
     public GameObject Paddle;
 
-
-    // Use this for initialization
     void Start()
     {
         Paddle = GameObject.Find("paddleRed");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void OnCollisionEnter2D(Collision2D coll)
     {
+        // Activate effect
         Activate();
+        // Become invisible
         GetComponent<SpriteRenderer>().enabled = false;
     }
 
@@ -46,13 +40,13 @@ public class PowerUp : MonoBehaviour
             case "PowerUpBlue(Clone)":
                 StartCoroutine(PaddleScale());
                 break;
+            // More Power-Up types can be added
         }
     }
 
     IEnumerator PaddleScale()
     {
         Paddle.transform.localScale += new Vector3(0.5F, 0, 0);
-        Debug.Log("FIRST");
         yield return new WaitForSeconds(5);
         Paddle.transform.localScale = new Vector3(1, 1, 1);
         Destroy(gameObject);

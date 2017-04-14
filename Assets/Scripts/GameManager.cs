@@ -5,25 +5,23 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    private GameObject _ball;
     public static int ActiveLevel;
     public GameObject KubePrefab;
+    public static int NumberOfBricks;
+
     public GameObject VictoryPanel;
     public GameObject LosePanel;
-
-    private GameObject _ball;
-    public static int NumberOfBricks;
     public static int Lives;
     public Text LivesText;
     public static int Score;
     public Text ScoreText;
 
-    private bool[][] _pattern = new bool[7][];  
+    // 7 by 7 matrix
+    private bool[][] _pattern = new bool[7][];
     Vector3 _upperRightKube = new Vector3(-2.1f,3.2f,0f);
     Vector2 _spaceBetweenCubes = new Vector2(0.7f,0.5f);
 
-
-
-    // Use this for initialization
     void Start ()
     {
         SecondPaddle.IsMultiplayer = false;
@@ -33,26 +31,22 @@ public class GameManager : MonoBehaviour
         LoadLevel();
     }
     
-    // Update is called once per frame
     void Update () {
         // GUI Update
         LivesText.text = "Lives " + Lives;
         ScoreText.text = "Score " + Score;
-
     }
 
-    public void LB()
+    public void LaunchBall()
     {
         _ball = GameObject.Find("ballBlue(Clone)");
-        Ball Ballscript = _ball.GetComponent<Ball>();
-        Ballscript.LaunchBall();
+        _ball.GetComponent<Ball>().LaunchBall();
     }
 
     public void Pause()
     {
         Time.timeScale = 0f;
     }
-
 
     public void Resume()
     {
@@ -89,7 +83,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-
     void InitializeBlockPattern()
     {
         for (int i = 0; i < 7; i++)
@@ -98,7 +91,7 @@ public class GameManager : MonoBehaviour
             {
                 if (_pattern[i][j])
                 {
-                    Vector3 kubePosition = new Vector3(_upperRightKube.x + (_spaceBetweenCubes.x * i), _upperRightKube.y - (_spaceBetweenCubes.y * j), 0);
+                    Vector3 kubePosition = new Vector3(_upperRightKube.x + _spaceBetweenCubes.x * i, _upperRightKube.y - _spaceBetweenCubes.y * j, 0);
                     Instantiate(KubePrefab, kubePosition, Quaternion.identity);
                 }
             }
@@ -109,7 +102,7 @@ public class GameManager : MonoBehaviour
     {
         switch (ActiveLevel)
         {
-            // 1 pattern
+            // 1 level pattern
             case 1:
                 _pattern[0] = new bool[7] { false, false, false, false, false, false, false };
                 _pattern[1] = new bool[7] { false, false, false, false, false, false, false };
@@ -119,7 +112,7 @@ public class GameManager : MonoBehaviour
                 _pattern[5] = new bool[7] { false, false, false, false, false, false, false };
                 _pattern[6] = new bool[7] { false, false, false, false, false, false, false };
                 break;
-            // 2 pattern
+            // 2 level pattern
             case 2:
                 _pattern[0] = new bool[7] { false, false, false, false, false, false, false };
                 _pattern[1] = new bool[7] { false, false, false, false, false, false, false };
@@ -129,7 +122,7 @@ public class GameManager : MonoBehaviour
                 _pattern[5] = new bool[7] { false, false, false, false, false, false, false };
                 _pattern[6] = new bool[7] { false, false, false, false, false, false, false };
                 break;
-            // 3 pattern
+            // 3 level pattern
             case 3:
                 _pattern[0] = new bool[7] { false, false, false, false, false, false, false };
                 _pattern[1] = new bool[7] { false, false, false, false, false, false, false };
